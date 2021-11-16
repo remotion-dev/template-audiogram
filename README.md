@@ -11,6 +11,24 @@ Start changing things like this:
 - Tweak `src/Composition.tsx`
 - Change fonts in `src/fonts.css`
 
+## How do I render my video?
+
+Run this:
+
+```
+npx remotion render src/index.tsx Audiogram out.mp4
+```
+
+Or check out the Remotion docs. There are lots of ways to render.
+
+## Where to get a transcript (SRT file)?
+
+There are a few places:
+
+- Your podcasting host might provide them for you.
+- Descript makes transcription really easy.
+- There are tons of other, paid solutions, like Otter.io.
+
 ## Commands
 
 **Start Preview**

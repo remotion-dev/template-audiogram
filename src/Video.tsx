@@ -11,7 +11,7 @@ export const RemotionVideo: React.FC = () => {
 	return (
 		<>
 			<Composition
-				id="Empty"
+				id="Audiogram"
 				component={AudiogramComposition}
 				durationInFrames={durationInFrames}
 				fps={fps}
