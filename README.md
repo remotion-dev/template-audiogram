@@ -2,7 +2,7 @@
 
 This template is for creating "audiograms". In other words, video clips from podcast episodes, or any other audio. It's a popular way of sharing audio snippets on social media.
 
-Made by [@marcusstenbeck](https://twitter.com/marcusstenbeck)
+[Example video](https://twitter.com/marcusstenbeck/status/1460641903326732300)
 
 <p align="center">
   <img src="https://github.com/marcusstenbeck/remotion-template-audiogram/raw/main/Promo.png">
