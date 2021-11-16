@@ -1,10 +1,12 @@
 # Remotion Audiogram Template
 
+This template is for creating "audiograms". In other words, video clips from podcast episodes, or any other audio. It's a popular way of sharing audio snippets on social media.
+
+Made by [@marcusstenbeck](https://twitter.com/marcusstenbeck)
+
 <p align="center">
   <img src="https://github.com/marcusstenbeck/remotion-template-audiogram/raw/main/Promo.png">
 </p>
-
-This template is for creating "audiograms". In other words, video clips from podcast episodes, or any other audio. It's a popular way of sharing audio snippets on social media.
 
 It features Tailwind CSS for easy styling.
 
