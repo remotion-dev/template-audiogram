@@ -14,6 +14,10 @@ export const PromoComposition = () => {
 			<div className="transform-gpu font-extrabold text-gray-500 text-2xl filter drop-shadow-xl w-64 absolute top-1 left-3">
 				Free Template
 			</div>
+			<div className="transform-gpu leading-none font-normal text-gray-500 text-md filter drop-shadow-xl w-52 absolute top-10 left-3">
+				Add your own audio, subtitles and cover. Or make your own design with
+				TailwindCSS.
+			</div>
 			<div className="transform-gpu font-extrabold text-yellow-400 text-4xl filter drop-shadow-xl w-64 absolute top-28 left-3">
 				Make your podcast clip with{' '}
 				<span className="text-blue-400">Remotion</span>
