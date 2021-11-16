@@ -1,11 +1,21 @@
+import { useCurrentFrame, useVideoConfig } from 'remotion';
 import { AudiogramComposition } from './Composition';
 
 export const PromoComposition = () => {
+	const { fps } = useVideoConfig();
+	const frame = useCurrentFrame();
+
 	return (
 		<div className="w-full h-full bg-gray-700">
 			<div
 				className="absolute left-36 -top-20 shadow-lg overflow-hidden rounded-xl"
-				style={{ width: 1080, height: 1080, transform: 'scale(0.5)' }}
+				style={{
+					width: 1080,
+					height: 1080,
+					transform: `scale(0.5) rotate(${
+						-3 + 2 * Math.sin(3 * (frame / fps))
+					}deg)`,
+				}}
 			>
 				<div className="rounded-full">
 					<AudiogramComposition />;
