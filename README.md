@@ -1,12 +1,15 @@
-# Remotion video
+# Remotion Audiogram Template
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <img src="https://github.com/remotion-dev/logo/raw/main/withtitle/element-0.png">
-  </a>
-</p>
+This template is for creating "audiograms". In other words, video clips from podcast episodes, or any other audio. It's a popular way of sharing audio snippets on social media.
 
-Welcome to your Remotion project!
+It features Tailwind CSS for easy styling.
+
+Start changing things like this:
+
+- Adjust size and length in `src/Video.tsx`
+- Replacing audio, cover and subtitles in the `src/assets` folder
+- Tweak `src/Composition.tsx`
+- Change fonts in `src/fonts.css`
 
 ## Commands
 
