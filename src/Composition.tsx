@@ -22,12 +22,16 @@ const AudioViz = () => {
 		return null;
 	}
 
-	const visualization = visualizeAudio({
+	const allVisualizationValues = visualizeAudio({
 		fps,
 		frame,
 		audioData,
-		numberOfSamples: 16,
+		numberOfSamples: 256, // use more samples to get a nicer visualisation
 	});
+
+	// pick the low values because they look nicer than high values
+	// feel free to play around :)
+	const visualization = allVisualizationValues.slice(8, 30);
 
 	const mirrored = [...visualization.slice(1).reverse(), ...visualization];
 
@@ -38,7 +42,7 @@ const AudioViz = () => {
 					<div
 						className="w-1 bg-yellow-300 rounded"
 						style={{
-							height: `${100 * Math.sqrt(Math.sqrt(v))}%`,
+							height: `${500 * Math.sqrt(v)}%`,
 						}}
 					/>
 				);
