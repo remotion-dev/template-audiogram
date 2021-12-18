@@ -24,10 +24,10 @@ Start changing things like this:
 Run this:
 
 ```
-npx remotion render src/index.tsx Audiogram out/video.mp4
+npm run build
 ```
 
-Or check out the Remotion docs. There are lots of ways to render.
+Or check out the [Remotion docs](/docs/render/). There are lots of ways to render.
 
 ## Where to get a transcript (SRT file)?
 
