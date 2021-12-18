@@ -23,7 +23,7 @@ Start changing things like this:
 
 Run this:
 
-```
+```console
 npm run build
 ```
 
