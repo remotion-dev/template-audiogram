@@ -1,9 +1,17 @@
-import {Config} from 'remotion';
+import { Config, Internals } from 'remotion';
 
 Config.Rendering.setImageFormat('jpeg');
 Config.Output.setOverwriteOutput(true);
 
 Config.Bundling.overrideWebpackConfig((currentConfiguration) => {
+	const cssRules = currentConfiguration.module?.rules?.find((r) => {
+		if (r === '...') {
+			return false;
+		}
+		return r.test?.toString().includes('.css');
+	});
+	const useCss =
+		cssRules !== '...' && cssRules !== undefined ? cssRules.use : [];
 	return {
 		...currentConfiguration,
 		module: {
@@ -21,8 +29,7 @@ Config.Bundling.overrideWebpackConfig((currentConfiguration) => {
 				{
 					test: /\.css$/i,
 					use: [
-						'style-loader',
-						'css-loader',
+						...(Array.isArray(useCss) ? [...useCss] : []),
 						{
 							loader: 'postcss-loader',
 							options: {
@@ -35,7 +42,7 @@ Config.Bundling.overrideWebpackConfig((currentConfiguration) => {
 								},
 							},
 						},
-					],
+					].filter(Internals.truthy),
 				},
 				{
 					test: /\.srt?$/,
