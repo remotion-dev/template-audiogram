@@ -1,4 +1,4 @@
-import { Config, Internals } from 'remotion';
+import { Config } from 'remotion';
 
 Config.Rendering.setImageFormat('jpeg');
 Config.Output.setOverwriteOutput(true);
@@ -42,7 +42,7 @@ Config.Bundling.overrideWebpackConfig((currentConfiguration) => {
 								},
 							},
 						},
-					].filter(Internals.truthy),
+					],
 				},
 				{
 					test: /\.srt?$/,
