@@ -39,6 +39,12 @@ There are a few places:
 
 ## Commands
 
+**Install Dependencies**
+
+```console
+npm install
+```
+
 **Start Preview**
 
 ```console
