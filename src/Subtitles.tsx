@@ -1,14 +1,14 @@
-import parseSRT, {SubtitleItem} from 'parse-srt';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {useCurrentFrame, useVideoConfig, VideoConfig} from 'remotion';
+import parseSRT, { SubtitleItem } from 'parse-srt';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useCurrentFrame, useVideoConfig, VideoConfig } from 'remotion';
 
 const useWindowedFrameSubs = (
 	src: string,
-	options: {windowStart?: number; windowEnd?: number} = {}
+	options: { windowStart?: number; windowEnd?: number } = {}
 ) => {
-	const {windowStart = -Infinity, windowEnd = Infinity} = options;
+	const { windowStart = -Infinity, windowEnd = Infinity } = options;
 	const config = useVideoConfig();
-	const {fps} = config;
+	const { fps } = config;
 
 	return useMemo(() => {
 		const subsWithSeconds = parseSRT(src);
@@ -103,10 +103,10 @@ export const PaginatedSubtitles: React.FC<{
 		const lineOffsets = Array.from(pageElement.childNodes).reduce<
 			PaginationLine[]
 		>((acc, item) => {
-			const {offsetTop, id} = item as HTMLElement;
+			const { offsetTop, id } = item as HTMLElement;
 			const lastOffsetTop = acc[acc.length - 1]?.offsetTop;
 			if (lastOffsetTop === offsetTop) return acc;
-			return [...acc, {index: Number(id), offsetTop}];
+			return [...acc, { index: Number(id), offsetTop }];
 		}, []);
 		setLines(lineOffsets);
 	}, [frame]);
@@ -140,14 +140,14 @@ export const PaginatedSubtitles: React.FC<{
 
 	const currentLineIndex = Math.max(
 		0,
-		lineSubs.findIndex((l) => l.includes(currentSubtitleItem!))
+		lineSubs.findIndex((l) => l.includes(currentSubtitleItem as SubtitleItem))
 	);
 
 	const startLine = Math.max(0, currentLineIndex - (linesPerPage - 1));
-	// const startLine = linesPerPage * Math.floor(currentLineIndex / linesPerPage);
+	// Const startLine = linesPerPage * Math.floor(currentLineIndex / linesPerPage);
 
 	return (
-		<div style={{position: 'relative'}}>
+		<div style={{ position: 'relative' }}>
 			{/* <div>
 				 {JSON.stringify({startLine, linesPerPage})}
 				 <br />

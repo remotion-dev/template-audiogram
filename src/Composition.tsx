@@ -26,10 +26,10 @@ const AudioViz = () => {
 		fps,
 		frame,
 		audioData,
-		numberOfSamples: 256, // use more samples to get a nicer visualisation
+		numberOfSamples: 256, // Use more samples to get a nicer visualisation
 	});
 
-	// pick the low values because they look nicer than high values
+	// Pick the low values because they look nicer than high values
 	// feel free to play around :)
 	const visualization = allVisualizationValues.slice(8, 30);
 
@@ -54,7 +54,7 @@ const AudioViz = () => {
 export const AudiogramComposition = () => {
 	const { durationInFrames } = useVideoConfig();
 
-	// change this to adjust the part of the audio to use
+	// Change this to adjust the part of the audio to use
 	const offset = 2000;
 
 	return (
