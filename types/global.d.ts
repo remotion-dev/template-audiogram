@@ -11,5 +11,3 @@ declare module 'parse-srt' {
 
 	export default parseSRT;
 }
-
-declare module '*.srt';

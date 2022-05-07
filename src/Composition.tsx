@@ -1,16 +1,19 @@
 import { useAudioData, visualizeAudio } from '@remotion/media-utils';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import {
 	Audio,
+	continueRender,
+	delayRender,
 	Easing,
 	Img,
 	interpolate,
 	Sequence,
+	staticFile,
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
 import audioSource from './assets/audio.mp3';
 import coverImg from './assets/cover.jpg';
-import subtitlesSource from './assets/subtitles.srt';
 import { PaginatedSubtitles } from './Subtitles';
 
 const AudioViz = () => {
@@ -51,11 +54,32 @@ const AudioViz = () => {
 	);
 };
 
+const subtitlesSource = staticFile('subtitles.srt');
+
 export const AudiogramComposition = () => {
 	const { durationInFrames } = useVideoConfig();
 
+	const [handle] = useState(() => delayRender());
+	const [subtitles, setSubtitles] = useState<string | null>(null);
+
+	useEffect(() => {
+		fetch(subtitlesSource)
+			.then((res) => res.text())
+			.then((text) => {
+				setSubtitles(text);
+				continueRender(handle);
+			})
+			.catch((err) => {
+				console.log('Error fetching subtitles', err);
+			});
+	}, [handle]);
+
 	// Change this to adjust the part of the audio to use
 	const offset = 2000;
+
+	if (!subtitles) {
+		return null;
+	}
 
 	return (
 		<Sequence from={-offset}>
@@ -82,7 +106,7 @@ export const AudiogramComposition = () => {
 
 				<div className="mt-2 text-2xl font-semibold">
 					<PaginatedSubtitles
-						src={subtitlesSource}
+						src={subtitles}
 						startFrame={offset}
 						endFrame={offset + durationInFrames}
 						linesPerPage={4}

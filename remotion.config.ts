@@ -44,10 +44,6 @@ Config.Bundling.overrideWebpackConfig((currentConfiguration) => {
 						},
 					],
 				},
-				{
-					test: /\.srt?$/,
-					type: 'asset/source',
-				},
 			],
 		},
 	};
