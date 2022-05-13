@@ -17,7 +17,6 @@ Start changing things like this:
 - Adjust size and length in `src/Video.tsx`
 - Replacing audio, cover and subtitles in the `src/assets` folder
 - Tweak `src/Composition.tsx`
-- Change fonts in `src/fonts.css`
 
 ## How do I render my video?
 
