@@ -1,11 +1,5 @@
 import parseSRT, { SubtitleItem } from 'parse-srt';
-import React, {
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
 	continueRender,
 	delayRender,
