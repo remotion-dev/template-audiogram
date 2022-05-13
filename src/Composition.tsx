@@ -1,6 +1,7 @@
 import { useAudioData, visualizeAudio } from '@remotion/media-utils';
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
+	AbsoluteFill,
 	Audio,
 	continueRender,
 	delayRender,
@@ -14,7 +15,7 @@ import {
 } from 'remotion';
 import audioSource from './assets/audio.mp3';
 import coverImg from './assets/cover.jpg';
-import { PaginatedSubtitles } from './Subtitles';
+import { LINE_HEIGHT, PaginatedSubtitles } from './Subtitles';
 
 const AudioViz = () => {
 	const frame = useCurrentFrame();
@@ -40,9 +41,10 @@ const AudioViz = () => {
 
 	return (
 		<div className="flex flex-row h-16 items-center justify-center gap-1">
-			{mirrored.map((v) => {
+			{mirrored.map((v, i) => {
 				return (
 					<div
+						key={i}
 						className="w-1 bg-yellow-300 rounded"
 						style={{
 							height: `${500 * Math.sqrt(v)}%`,
@@ -61,6 +63,7 @@ export const AudiogramComposition = () => {
 
 	const [handle] = useState(() => delayRender());
 	const [subtitles, setSubtitles] = useState<string | null>(null);
+	const ref = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		fetch(subtitlesSource)
@@ -82,66 +85,76 @@ export const AudiogramComposition = () => {
 	}
 
 	return (
-		<Sequence from={-offset}>
-			<Audio src={audioSource} />
+		<div ref={ref}>
+			<AbsoluteFill>
+				<Sequence from={-offset}>
+					<Audio src={audioSource} />
 
-			<div
-				className="flex flex-col w-full h-full text-white p-4 bg-black"
-				style={{
-					fontFamily: 'IBM Plex Sans',
-				}}
-			>
-				<div className="flex flex-row">
-					<Img className="rounded-lg" src={coverImg} />
+					<div
+						className="flex flex-col w-full h-full text-white p-4 bg-black"
+						style={{
+							fontFamily: 'IBM Plex Sans',
+						}}
+					>
+						<div className="flex flex-row">
+							<Img className="rounded-lg" src={coverImg} />
 
-					<div className="ml-4 leading-tight font-extrabold text-gray-700">
-						#234 – Money, Kids, and Choosing Your Market with Justin Jackson of
-						Transistor.fm
+							<div className="ml-4 leading-tight font-extrabold text-gray-700">
+								#234 – Money, Kids, and Choosing Your Market with Justin Jackson
+								of Transistor.fm
+							</div>
+						</div>
+
+						<div className="mt-4">
+							<AudioViz />
+						</div>
+
+						<div
+							style={{ lineHeight: `${LINE_HEIGHT}px` }}
+							className="mt-2 text-2xl font-semibold"
+						>
+							<PaginatedSubtitles
+								src={subtitles}
+								startFrame={offset}
+								endFrame={offset + durationInFrames}
+								linesPerPage={4}
+								renderSubtitleItem={(item, frame) => (
+									<>
+										<span
+											style={{
+												backfaceVisibility: 'hidden',
+												display: 'inline-block',
+
+												opacity: interpolate(
+													frame,
+													[item.start, item.start + 15],
+													[0, 1],
+													{
+														extrapolateLeft: 'clamp',
+														extrapolateRight: 'clamp',
+													}
+												),
+												transform: `perspective(1000px) translateY(${interpolate(
+													frame,
+													[item.start, item.start + 15],
+													[0.5, 0],
+													{
+														easing: Easing.out(Easing.quad),
+														extrapolateLeft: 'clamp',
+														extrapolateRight: 'clamp',
+													}
+												)}em)`,
+											}}
+										>
+											{item.text}
+										</span>{' '}
+									</>
+								)}
+							/>
+						</div>
 					</div>
-				</div>
-
-				<div className="mt-4">
-					<AudioViz />
-				</div>
-
-				<div className="mt-2 text-2xl font-semibold">
-					<PaginatedSubtitles
-						src={subtitles}
-						startFrame={offset}
-						endFrame={offset + durationInFrames}
-						linesPerPage={4}
-						renderSubtitleItem={(item, frame) => (
-							<>
-								<span
-									style={{
-										backfaceVisibility: 'hidden',
-										display: 'inline-block',
-
-										opacity: interpolate(
-											frame,
-											[item.start, item.start + 15],
-											[0, 1],
-											{ extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }
-										),
-										transform: `perspective(1000px) translateY(${interpolate(
-											frame,
-											[item.start, item.start + 15],
-											[0.5, 0],
-											{
-												easing: Easing.out(Easing.quad),
-												extrapolateLeft: 'clamp',
-												extrapolateRight: 'clamp',
-											}
-										)}em)`,
-									}}
-								>
-									{item.text}
-								</span>{' '}
-							</>
-						)}
-					/>
-				</div>
-			</div>
-		</Sequence>
+				</Sequence>
+			</AbsoluteFill>
+		</div>
 	);
 };

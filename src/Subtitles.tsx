@@ -1,6 +1,13 @@
 import parseSRT, { SubtitleItem } from 'parse-srt';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useCurrentFrame, useVideoConfig, VideoConfig } from 'remotion';
+import {
+	continueRender,
+	delayRender,
+	useCurrentFrame,
+	useVideoConfig,
+	VideoConfig,
+} from 'remotion';
+import { ensureFont } from './ensure-font';
 
 const useWindowedFrameSubs = (
 	src: string,
@@ -67,10 +74,9 @@ export const Subtitles: React.FC<{
 	);
 };
 
-type PaginationLine = {
-	index: number;
-	offsetTop: number;
-};
+const ZOOM_MEASURER_SIZE = 10;
+export const LINE_HEIGHT = 98;
+
 export const PaginatedSubtitles: React.FC<{
 	src: string;
 	renderSubtitleItem?: (
@@ -88,50 +94,56 @@ export const PaginatedSubtitles: React.FC<{
 	renderSubtitleItem = (item) => <span>{item.text}</span>,
 	linesPerPage,
 }) => {
-	const pageRef = useRef<HTMLDivElement | null>(null);
 	const frame = useCurrentFrame();
 	const config = useVideoConfig();
+	const windowRef = useRef<HTMLDivElement>(null);
+	const zoomMeasurer = useRef<HTMLDivElement>(null);
+	const [handle] = useState(() => delayRender());
+	const [fontHandle] = useState(() => delayRender());
+	const [fontLoaded, setFontLoaded] = useState(false);
 	const subtitles = useWindowedFrameSubs(src, {
 		windowStart: startFrame,
 		windowEnd: endFrame,
 	});
-	const [lines, setLines] = useState<PaginationLine[]>([]);
 
-	useEffect(() => {
-		const pageElement = pageRef.current;
-		if (!pageElement) return;
-		const lineOffsets = Array.from(pageElement.childNodes).reduce<
-			PaginationLine[]
-		>((acc, item) => {
-			const { offsetTop, id } = item as HTMLElement;
-			const lastOffsetTop = acc[acc.length - 1]?.offsetTop;
-			if (lastOffsetTop === offsetTop) return acc;
-			return [...acc, { index: Number(id), offsetTop }];
-		}, []);
-		setLines(lineOffsets);
-	}, [frame]);
+	const [lineOffset, setLineOffset] = useState(0);
 
 	const currentSubtitleItem = subtitles
 		.slice()
 		.reverse()
 		.find((item) => item.start < frame);
 
+	useEffect(() => {
+		if (!fontLoaded) {
+			return;
+		}
+		const zoom =
+			(zoomMeasurer.current?.getBoundingClientRect().height as number) /
+			ZOOM_MEASURER_SIZE;
+		const linesRendered =
+			(windowRef.current?.getBoundingClientRect().height as number) /
+			(LINE_HEIGHT * zoom);
+		const linesToOffset = Math.max(0, linesRendered - linesPerPage);
+		setLineOffset(linesToOffset);
+		continueRender(handle);
+	}, [fontLoaded, frame, handle, linesPerPage]);
+
+	useEffect(() => {
+		ensureFont().then(() => {
+			continueRender(fontHandle);
+			setFontLoaded(true);
+		});
+	}, [fontHandle, fontLoaded]);
+
 	const lineSubs = (() => {
 		const finalLines: SubtitleItem[][] = [];
-		let lineIndex = 0;
+		const lineIndex = 0;
 
 		for (let i = 0; i < subtitles.length; i++) {
 			const subtitleItem = subtitles[i];
 
 			if (subtitleItem.start >= frame) continue;
 
-			for (let j = 0; j < lines.length; j++) {
-				const lineItem = lines[j];
-
-				if (subtitleItem.id >= lineItem.index) {
-					lineIndex = j;
-				}
-			}
 			finalLines[lineIndex] = [...(finalLines[lineIndex] ?? []), subtitleItem];
 		}
 
@@ -144,31 +156,20 @@ export const PaginatedSubtitles: React.FC<{
 	);
 
 	const startLine = Math.max(0, currentLineIndex - (linesPerPage - 1));
-	// Const startLine = linesPerPage * Math.floor(currentLineIndex / linesPerPage);
 
 	return (
-		<div style={{ position: 'relative' }}>
-			{/* <div>
-				 {JSON.stringify({startLine, linesPerPage})}
-				 <br />
-				---
-				<br />
-				{JSON.stringify(currentSubtitleItem)}
-				<br />
-				---
-				<br />
-				{JSON.stringify(lines)}
-				<br />
-				---
-				<br />
-				{lineSubs.map((l) => (
-					<>
-						<br />
-						{JSON.stringify(l.map((i) => i.text))}
-					</>
-				))}
-			</div> */}
-			<div>
+		<div
+			style={{
+				position: 'relative',
+				overflow: 'hidden',
+			}}
+		>
+			<div
+				ref={windowRef}
+				style={{
+					transform: `translateY(-${lineOffset * LINE_HEIGHT}px)`,
+				}}
+			>
 				{lineSubs
 					.slice(startLine, startLine + linesPerPage)
 					.reduce((subs, item) => [...subs, ...item], [])
@@ -179,20 +180,9 @@ export const PaginatedSubtitles: React.FC<{
 					))}
 			</div>
 			<div
-				ref={pageRef}
-				style={{
-					position: 'absolute',
-					left: 0,
-					top: 0,
-					visibility: 'hidden',
-				}}
-			>
-				{subtitles.map((item) => (
-					<span key={item.id} id={String(item.id)}>
-						{renderSubtitleItem(item, frame, config)}
-					</span>
-				))}
-			</div>
+				ref={zoomMeasurer}
+				style={{ height: ZOOM_MEASURER_SIZE, width: ZOOM_MEASURER_SIZE }}
+			/>
 		</div>
 	);
 };

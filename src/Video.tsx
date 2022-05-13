@@ -1,6 +1,5 @@
 import { Composition } from 'remotion';
 import { AudiogramComposition } from './Composition';
-import './fonts.css';
 import { PromoComposition } from './PromoComposition';
 import './style.css';
 
