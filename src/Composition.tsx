@@ -40,12 +40,12 @@ const AudioViz = () => {
 	const mirrored = [...visualization.slice(1).reverse(), ...visualization];
 
 	return (
-		<div className="flex flex-row h-16 items-center justify-center gap-1">
+		<div className="audio-viz">
 			{mirrored.map((v, i) => {
 				return (
 					<div
 						key={i}
-						className="w-1 bg-yellow-300 rounded"
+						className="bar"
 						style={{
 							height: `${500 * Math.sqrt(v)}%`,
 						}}
@@ -91,27 +91,27 @@ export const AudiogramComposition = () => {
 					<Audio src={audioSource} />
 
 					<div
-						className="flex flex-col w-full h-full text-white p-4 bg-black"
+						className="container"
 						style={{
 							fontFamily: 'IBM Plex Sans',
 						}}
 					>
-						<div className="flex flex-row">
-							<Img className="rounded-lg" src={coverImg} />
+						<div className="row">
+							<Img className="cover" src={coverImg} />
 
-							<div className="ml-4 leading-tight font-extrabold text-gray-700">
+							<div className="title">
 								#234 – Money, Kids, and Choosing Your Market with Justin Jackson
 								of Transistor.fm
 							</div>
 						</div>
 
-						<div className="mt-4">
+						<div>
 							<AudioViz />
 						</div>
 
 						<div
 							style={{ lineHeight: `${LINE_HEIGHT}px` }}
-							className="mt-2 text-2xl font-semibold"
+							className="captions"
 						>
 							<PaginatedSubtitles
 								src={subtitles}
