@@ -13,17 +13,17 @@
 .audio-viz {
 	display: flex;
 	flex-direction: row;
-	height: 192px;
+	height: calc(var(--base-size) * 4);
 	align-items: center;
 	justify-content: center;
-	gap: 12px;
+	gap: calc(var(--base-size) * 0.25);
 	margin-top: var(--base-size);
 }
 
 .bar {
 	background-color:  rgba(252, 211, 77, 1);
-	border-radius: 12px;
-	width: 12px;
+	border-radius: calc(var(--base-size) * 0.25);
+	width: calc(var(--base-size) * 0.25);
 }
 
 .container {
@@ -55,8 +55,8 @@
 }
 
 .captions {
-	margin-top: 24px;
-	font-size: 72px;
+	margin-top: calc(var(--base-size) * 0.5);
+	font-size: calc(var(--base-size) * 1.5);
 	font-weight: 600;
 }
 
@@ -69,22 +69,22 @@
 
 .promo-composition {
 	position: absolute;
-	left: 432px;
-	top: -240px;
+	left: calc(var(--base-size) * 9);
+	top: calc(var(--base-size) * -5);
 	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-	border-radius: 36px;
+	border-radius: calc(var(--base-size) * 0.75);
 	overflow: hidden;
 }
 
 .free-template {
-	width: 768px;
-	left: 36px;
-	font-size: 72px;
-	line-height: 96px;
+	width: calc(var(--base-size) * 16);
+	left: calc(var(--base-size) * 0.75);
+	font-size: calc(var(--base-size) * 1.5);
+	line-height: calc(var(--base-size) * 2);
 	font-weight: 800;
 	filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.03)) drop-shadow(0 8px 5px rgba(0, 0, 0, 0.08));
-	left: 36px;
-	top: 12px;
+	left: calc(var(--base-size) * 0.75);
+	top: calc(var(--base-size) * 0.25);
 	position: absolute;
 	color: rgba(107, 114, 128, 1);
 }
@@ -95,22 +95,22 @@
 	font-weight: normal;
 	font-size: var(--base-size);
 	filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.03)) drop-shadow(0 8px 5px rgba(0, 0, 0, 0.08));
-	width: 624px;
-	left: 36px;
-	top: 120px;
+	width: calc(var(--base-size) * 13);
+	left: calc(var(--base-size) * 0.75);
+	top: calc(var(--base-size) * 2.5);
 	position: absolute;
 }
 
 .tagline {
 	font-weight: 800;
-	font-size: 108px;
-	line-height: 120px;
+	font-size: calc(var(--base-size) * 2.25);
+	line-height: calc(var(--base-size) * 2.5);
 	color: rgba(251, 191, 36, 1);
 	filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.03)) drop-shadow(0 8px 5px rgba(0, 0, 0, 0.08));
-	width: 768px;
+	width: calc(var(--base-size) * 16);
 	position: absolute;
-	top: 336px;
-	left: 36px;
+	top: calc(var(--base-size) * 7);
+	left: calc(var(--base-size) * 0.75);
 }
 
 .remotion-blue {
