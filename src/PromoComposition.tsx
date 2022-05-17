@@ -24,9 +24,9 @@ export const PromoComposition = () => {
 			<div className="free-template">Free Template</div>
 			<div className="description">
 				Add your own audio, subtitles and cover. Or make your own design with
-				TailwindCSS.
+				CSS.
 			</div>
-			<div className="tagline text-4xl">
+			<div className="tagline">
 				Make your podcast clip with{' '}
 				<span className="remotion-blue">Remotion</span>
 			</div>
