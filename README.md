@@ -10,8 +10,6 @@ This template is for creating "audiograms". In other words, video clips from pod
   <img src="https://github.com/marcusstenbeck/remotion-template-audiogram/raw/main/Promo.png">
 </p>
 
-It features Tailwind CSS for easy styling.
-
 Start changing things like this:
 
 - Adjust size and length in `src/Video.tsx`
