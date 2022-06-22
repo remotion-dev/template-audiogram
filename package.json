@@ -11,11 +11,9 @@
 	"repository": {},
 	"license": "UNLICENSED",
 	"dependencies": {
-		"@remotion/bundler": "^3.0.0",
 		"@remotion/cli": "^3.0.0",
 		"@remotion/eslint-config": "^3.0.0",
 		"@remotion/media-utils": "^3.0.0",
-		"@remotion/renderer": "^3.0.0",
 		"eslint": "^8.14.0",
 		"parse-srt": "1.0.0-alpha",
 		"prettier": "^2.6.2",
