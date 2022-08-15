@@ -1,7 +1,5 @@
 # Remotion Audiogram Template
 
-> Subscribe to [RemotionKit](https://remotionkit.com/) to get stuff like this in your inbox.
-
 This template is for creating "audiograms". In other words, video clips from podcast episodes, or any other audio. It's a popular way of sharing audio snippets on social media.
 
 [Example video](https://twitter.com/marcusstenbeck/status/1460641903326732300)
