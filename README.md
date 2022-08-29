@@ -30,7 +30,7 @@ There are a few places:
 
 - Your podcasting host might provide them for you.
 - Descript makes transcription really easy.
-- There are tons of other, paid solutions, like Otter.io.
+- There are tons of other, paid solutions, like [Otter.ai](https://otter.ai) and [Scriptme.io](https://scriptme.io).
 
 ## Commands
 
