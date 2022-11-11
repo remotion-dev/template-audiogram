@@ -6,7 +6,7 @@ import './style.css';
 const fps = 30;
 const durationInFrames = 30 * fps;
 
-export const RemotionVideo: React.FC = () => {
+export const RemotionRoot: React.FC = () => {
 	return (
 		<>
 			<Composition
