@@ -9,7 +9,6 @@ import {
 	Img,
 	interpolate,
 	Sequence,
-	staticFile,
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
