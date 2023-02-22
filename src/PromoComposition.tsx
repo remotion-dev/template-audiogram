@@ -1,3 +1,4 @@
+import { staticFile } from 'remotion';
 import { useCurrentFrame, useVideoConfig } from 'remotion';
 import { AudiogramComposition } from './Composition';
 
@@ -18,7 +19,10 @@ export const PromoComposition = () => {
 				}}
 			>
 				<div>
-					<AudiogramComposition />;
+					<AudiogramComposition
+						audioOffsetInFrames={2000}
+						source={staticFile('subtitles.srt')}
+					/>
 				</div>
 			</div>
 			<div className="free-template">Free Template</div>

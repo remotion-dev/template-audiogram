@@ -1,3 +1,4 @@
+import { staticFile } from 'remotion';
 import { Composition } from 'remotion';
 import { AudiogramComposition } from './Composition';
 import { PromoComposition } from './PromoComposition';
@@ -16,6 +17,10 @@ export const RemotionRoot: React.FC = () => {
 				fps={fps}
 				width={1080}
 				height={1080}
+				defaultProps={{
+					audioOffsetInFrames: 2000,
+					source: staticFile('subtitles.srt'),
+				}}
 			/>
 			<Composition
 				id="Promo"

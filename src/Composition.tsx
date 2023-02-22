@@ -1,5 +1,5 @@
 import { useAudioData, visualizeAudio } from '@remotion/media-utils';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
 	AbsoluteFill,
 	Audio,
@@ -56,9 +56,10 @@ const AudioViz = () => {
 	);
 };
 
-const subtitlesSource = staticFile('subtitles.srt');
-
-export const AudiogramComposition = () => {
+export const AudiogramComposition: React.FC<{
+	source: string;
+	audioOffsetInFrames: number;
+}> = ({ source, audioOffsetInFrames }) => {
 	const { durationInFrames } = useVideoConfig();
 
 	const [handle] = useState(() => delayRender());
@@ -66,7 +67,7 @@ export const AudiogramComposition = () => {
 	const ref = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		fetch(subtitlesSource)
+		fetch(source)
 			.then((res) => res.text())
 			.then((text) => {
 				setSubtitles(text);
@@ -75,10 +76,7 @@ export const AudiogramComposition = () => {
 			.catch((err) => {
 				console.log('Error fetching subtitles', err);
 			});
-	}, [handle]);
-
-	// Change this to adjust the part of the audio to use
-	const offset = 2000;
+	}, [handle, source]);
 
 	if (!subtitles) {
 		return null;
@@ -87,7 +85,7 @@ export const AudiogramComposition = () => {
 	return (
 		<div ref={ref}>
 			<AbsoluteFill>
-				<Sequence from={-offset}>
+				<Sequence from={-audioOffsetInFrames}>
 					<Audio src={audioSource} />
 
 					<div
@@ -115,8 +113,8 @@ export const AudiogramComposition = () => {
 						>
 							<PaginatedSubtitles
 								subtitles={subtitles}
-								startFrame={offset}
-								endFrame={offset + durationInFrames}
+								startFrame={audioOffsetInFrames}
+								endFrame={audioOffsetInFrames + durationInFrames}
 								linesPerPage={4}
 								renderSubtitleItem={(item, frame) => (
 									<>
