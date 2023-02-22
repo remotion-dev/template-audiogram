@@ -5,15 +5,15 @@ import {
 	delayRender,
 	useCurrentFrame,
 	useVideoConfig,
-	VideoConfig,
 } from 'remotion';
 import { ensureFont } from './ensure-font';
+import { Word } from './Word';
 
 const useWindowedFrameSubs = (
 	src: string,
-	options: { windowStart?: number; windowEnd?: number } = {}
+	options: { windowStart: number; windowEnd: number }
 ) => {
-	const { windowStart = -Infinity, windowEnd = Infinity } = options;
+	const { windowStart, windowEnd } = options;
 	const config = useVideoConfig();
 	const { fps } = config;
 
@@ -44,23 +44,11 @@ export const LINE_HEIGHT = 98;
 
 export const PaginatedSubtitles: React.FC<{
 	subtitles: string;
-	renderSubtitleItem?: (
-		item: SubtitleItem,
-		frame: number,
-		config: VideoConfig
-	) => React.ReactNode;
-	startFrame?: number;
-	endFrame?: number;
+	startFrame: number;
+	endFrame: number;
 	linesPerPage: number;
-}> = ({
-	startFrame,
-	endFrame,
-	subtitles,
-	renderSubtitleItem = (item) => <span>{item.text}</span>,
-	linesPerPage,
-}) => {
+}> = ({ startFrame, endFrame, subtitles, linesPerPage }) => {
 	const frame = useCurrentFrame();
-	const config = useVideoConfig();
 	const windowRef = useRef<HTMLDivElement>(null);
 	const zoomMeasurer = useRef<HTMLDivElement>(null);
 	const [handle] = useState(() => delayRender());
@@ -73,7 +61,24 @@ export const PaginatedSubtitles: React.FC<{
 
 	const [lineOffset, setLineOffset] = useState(0);
 
-	const currentSubtitleItem = windowedFrameSubs
+	const onlyLastSentence = useMemo(() => {
+		const lastSentenceEnd =
+			windowedFrameSubs.findLastIndex((w, i) => {
+				const nextWord = windowedFrameSubs[i + 1];
+
+				return (
+					nextWord &&
+					(w.text.endsWith('?') ||
+						w.text.endsWith('.') ||
+						w.text.endsWith('!')) &&
+					nextWord.start < frame
+				);
+			}) + 1;
+
+		return windowedFrameSubs.slice(lastSentenceEnd);
+	}, [frame, windowedFrameSubs]);
+
+	const currentSubtitleItem = onlyLastSentence
 		.slice()
 		.reverse()
 		.find((item) => item.start < frame);
@@ -100,12 +105,12 @@ export const PaginatedSubtitles: React.FC<{
 		});
 	}, [fontHandle, fontLoaded]);
 
-	const lineSubs = (() => {
+	const lineSubs = useMemo(() => {
 		const finalLines: SubtitleItem[][] = [];
 		const lineIndex = 0;
 
-		for (let i = 0; i < windowedFrameSubs.length; i++) {
-			const subtitleItem = windowedFrameSubs[i];
+		for (let i = 0; i < onlyLastSentence.length; i++) {
+			const subtitleItem = onlyLastSentence[i];
 
 			if (subtitleItem.start >= frame) continue;
 
@@ -113,7 +118,7 @@ export const PaginatedSubtitles: React.FC<{
 		}
 
 		return finalLines;
-	})();
+	}, [frame, onlyLastSentence]);
 
 	const currentLineIndex = Math.max(
 		0,
@@ -127,6 +132,7 @@ export const PaginatedSubtitles: React.FC<{
 			style={{
 				position: 'relative',
 				overflow: 'hidden',
+				paddingBottom: '20px',
 			}}
 		>
 			<div
@@ -140,7 +146,7 @@ export const PaginatedSubtitles: React.FC<{
 					.reduce((subs, item) => [...subs, ...item], [])
 					.map((item) => (
 						<span key={item.id} id={String(item.id)}>
-							{renderSubtitleItem(item, frame, config)}
+							<Word frame={frame} item={item} />{' '}
 						</span>
 					))}
 			</div>
@@ -151,3 +157,12 @@ export const PaginatedSubtitles: React.FC<{
 		</div>
 	);
 };
+
+declare global {
+	interface Array<T> {
+		findLastIndex(
+			predicate: (value: T, index: number, obj: T[]) => unknown,
+			thisArg?: unknown
+		): number;
+	}
+}

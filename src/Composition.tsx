@@ -5,9 +5,7 @@ import {
 	Audio,
 	continueRender,
 	delayRender,
-	Easing,
 	Img,
-	interpolate,
 	Sequence,
 	useCurrentFrame,
 	useVideoConfig,
@@ -115,38 +113,6 @@ export const AudiogramComposition: React.FC<{
 								startFrame={audioOffsetInFrames}
 								endFrame={audioOffsetInFrames + durationInFrames}
 								linesPerPage={4}
-								renderSubtitleItem={(item, frame) => (
-									<>
-										<span
-											style={{
-												backfaceVisibility: 'hidden',
-												display: 'inline-block',
-
-												opacity: interpolate(
-													frame,
-													[item.start, item.start + 15],
-													[0, 1],
-													{
-														extrapolateLeft: 'clamp',
-														extrapolateRight: 'clamp',
-													}
-												),
-												transform: `perspective(1000px) translateY(${interpolate(
-													frame,
-													[item.start, item.start + 15],
-													[0.5, 0],
-													{
-														easing: Easing.out(Easing.quad),
-														extrapolateLeft: 'clamp',
-														extrapolateRight: 'clamp',
-													}
-												)}em)`,
-											}}
-										>
-											{item.text}
-										</span>{' '}
-									</>
-								)}
 							/>
 						</div>
 					</div>
