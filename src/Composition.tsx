@@ -114,7 +114,7 @@ export const AudiogramComposition = () => {
 							className="captions"
 						>
 							<PaginatedSubtitles
-								src={subtitles}
+								subtitles={subtitles}
 								startFrame={offset}
 								endFrame={offset + durationInFrames}
 								linesPerPage={4}

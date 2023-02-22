@@ -42,7 +42,7 @@ const useWindowedFrameSubs = (
 };
 
 export const Subtitles: React.FC<{
-	src: string;
+	subtitles: string;
 	renderSubtitleItem?: (
 		item: SubtitleItem,
 		frame: number,
@@ -53,19 +53,19 @@ export const Subtitles: React.FC<{
 }> = ({
 	startFrame,
 	endFrame,
-	src,
+	subtitles,
 	renderSubtitleItem = (item) => <span>{item.text}</span>,
 }) => {
 	const frame = useCurrentFrame();
 	const config = useVideoConfig();
-	const subtitles = useWindowedFrameSubs(src, {
+	const windowedFrameSubtitles = useWindowedFrameSubs(subtitles, {
 		windowStart: startFrame,
 		windowEnd: endFrame,
 	});
 
 	return (
 		<>
-			{subtitles.map((item) => (
+			{windowedFrameSubtitles.map((item) => (
 				<React.Fragment key={item.id}>
 					{renderSubtitleItem(item, frame, config)}
 				</React.Fragment>
@@ -78,7 +78,7 @@ const ZOOM_MEASURER_SIZE = 10;
 export const LINE_HEIGHT = 98;
 
 export const PaginatedSubtitles: React.FC<{
-	src: string;
+	subtitles: string;
 	renderSubtitleItem?: (
 		item: SubtitleItem,
 		frame: number,
@@ -90,7 +90,7 @@ export const PaginatedSubtitles: React.FC<{
 }> = ({
 	startFrame,
 	endFrame,
-	src,
+	subtitles,
 	renderSubtitleItem = (item) => <span>{item.text}</span>,
 	linesPerPage,
 }) => {
@@ -101,14 +101,14 @@ export const PaginatedSubtitles: React.FC<{
 	const [handle] = useState(() => delayRender());
 	const [fontHandle] = useState(() => delayRender());
 	const [fontLoaded, setFontLoaded] = useState(false);
-	const subtitles = useWindowedFrameSubs(src, {
+	const windowedFrameSubs = useWindowedFrameSubs(subtitles, {
 		windowStart: startFrame,
 		windowEnd: endFrame,
 	});
 
 	const [lineOffset, setLineOffset] = useState(0);
 
-	const currentSubtitleItem = subtitles
+	const currentSubtitleItem = windowedFrameSubs
 		.slice()
 		.reverse()
 		.find((item) => item.start < frame);
@@ -139,8 +139,8 @@ export const PaginatedSubtitles: React.FC<{
 		const finalLines: SubtitleItem[][] = [];
 		const lineIndex = 0;
 
-		for (let i = 0; i < subtitles.length; i++) {
-			const subtitleItem = subtitles[i];
+		for (let i = 0; i < windowedFrameSubs.length; i++) {
+			const subtitleItem = windowedFrameSubs[i];
 
 			if (subtitleItem.start >= frame) continue;
 
