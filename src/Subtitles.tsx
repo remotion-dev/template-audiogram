@@ -17,28 +17,26 @@ const useWindowedFrameSubs = (
 	const config = useVideoConfig();
 	const { fps } = config;
 
+	const parsed = useMemo(() => parseSRT(src), [src]);
+
 	return useMemo(() => {
-		const subsWithSeconds = parseSRT(src);
-		const subsWithFrameNumbers = subsWithSeconds.reduce<SubtitleItem[]>(
-			(acc, item) => {
+		return parsed
+			.map((item) => {
 				const start = Math.floor(item.start * fps);
 				const end = Math.floor(item.end * fps);
-
-				if (start < windowStart || start > windowEnd) return acc;
-
-				return [
-					...acc,
-					{
-						...item,
-						start,
-						end,
-					},
-				];
-			},
-			[]
-		);
-		return subsWithFrameNumbers;
-	}, [fps, src, windowEnd, windowStart]);
+				return { item, start, end };
+			})
+			.filter(({ start }) => {
+				return start >= windowStart && start <= windowEnd;
+			})
+			.map<SubtitleItem>(({ item, start, end }) => {
+				return {
+					...item,
+					start,
+					end,
+				};
+			}, []);
+	}, [fps, parsed, windowEnd, windowStart]);
 };
 
 export const Subtitles: React.FC<{
