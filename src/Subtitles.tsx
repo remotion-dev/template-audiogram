@@ -39,39 +39,6 @@ const useWindowedFrameSubs = (
 	}, [fps, parsed, windowEnd, windowStart]);
 };
 
-export const Subtitles: React.FC<{
-	subtitles: string;
-	renderSubtitleItem?: (
-		item: SubtitleItem,
-		frame: number,
-		config: VideoConfig
-	) => React.ReactNode;
-	startFrame?: number;
-	endFrame?: number;
-}> = ({
-	startFrame,
-	endFrame,
-	subtitles,
-	renderSubtitleItem = (item) => <span>{item.text}</span>,
-}) => {
-	const frame = useCurrentFrame();
-	const config = useVideoConfig();
-	const windowedFrameSubtitles = useWindowedFrameSubs(subtitles, {
-		windowStart: startFrame,
-		windowEnd: endFrame,
-	});
-
-	return (
-		<>
-			{windowedFrameSubtitles.map((item) => (
-				<React.Fragment key={item.id}>
-					{renderSubtitleItem(item, frame, config)}
-				</React.Fragment>
-			))}
-		</>
-	);
-};
-
 const ZOOM_MEASURER_SIZE = 10;
 export const LINE_HEIGHT = 98;
 
