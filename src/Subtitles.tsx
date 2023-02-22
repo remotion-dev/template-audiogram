@@ -61,8 +61,8 @@ export const PaginatedSubtitles: React.FC<{
 
 	const [lineOffset, setLineOffset] = useState(0);
 
-	const onlyLastSentence = useMemo(() => {
-		const lastSentenceEnd =
+	const onlyCurrentSentence = useMemo(() => {
+		const indexOfCurrentSentence =
 			windowedFrameSubs.findLastIndex((w, i) => {
 				const nextWord = windowedFrameSubs[i + 1];
 
@@ -75,13 +75,8 @@ export const PaginatedSubtitles: React.FC<{
 				);
 			}) + 1;
 
-		return windowedFrameSubs.slice(lastSentenceEnd);
+		return windowedFrameSubs.slice(indexOfCurrentSentence);
 	}, [frame, windowedFrameSubs]);
-
-	const currentSubtitleItem = onlyLastSentence
-		.slice()
-		.reverse()
-		.find((item) => item.start < frame);
 
 	useEffect(() => {
 		if (!fontLoaded) {
@@ -106,26 +101,18 @@ export const PaginatedSubtitles: React.FC<{
 	}, [fontHandle, fontLoaded]);
 
 	const lineSubs = useMemo(() => {
-		const finalLines: SubtitleItem[][] = [];
-		const lineIndex = 0;
+		let finalLines: SubtitleItem[] = [];
 
-		for (let i = 0; i < onlyLastSentence.length; i++) {
-			const subtitleItem = onlyLastSentence[i];
+		for (let i = 0; i < onlyCurrentSentence.length; i++) {
+			const subtitleItem = onlyCurrentSentence[i];
 
 			if (subtitleItem.start >= frame) continue;
 
-			finalLines[lineIndex] = [...(finalLines[lineIndex] ?? []), subtitleItem];
+			finalLines = [...finalLines, subtitleItem];
 		}
 
 		return finalLines;
-	}, [frame, onlyLastSentence]);
-
-	const currentLineIndex = Math.max(
-		0,
-		lineSubs.findIndex((l) => l.includes(currentSubtitleItem as SubtitleItem))
-	);
-
-	const startLine = Math.max(0, currentLineIndex - (linesPerPage - 1));
+	}, [frame, onlyCurrentSentence]);
 
 	return (
 		<div
@@ -141,14 +128,11 @@ export const PaginatedSubtitles: React.FC<{
 					transform: `translateY(-${lineOffset * LINE_HEIGHT}px)`,
 				}}
 			>
-				{lineSubs
-					.slice(startLine, startLine + linesPerPage)
-					.reduce((subs, item) => [...subs, ...item], [])
-					.map((item) => (
-						<span key={item.id} id={String(item.id)}>
-							<Word frame={frame} item={item} />{' '}
-						</span>
-					))}
+				{lineSubs.map((item) => (
+					<span key={item.id} id={String(item.id)}>
+						<Word frame={frame} item={item} />{' '}
+					</span>
+				))}
 			</div>
 			<div
 				ref={zoomMeasurer}
