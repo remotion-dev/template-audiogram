@@ -100,19 +100,9 @@ export const PaginatedSubtitles: React.FC<{
 		});
 	}, [fontHandle, fontLoaded]);
 
-	const lineSubs = useMemo(() => {
-		let finalLines: SubtitleItem[] = [];
-
-		for (let i = 0; i < onlyCurrentSentence.length; i++) {
-			const subtitleItem = onlyCurrentSentence[i];
-
-			if (subtitleItem.start >= frame) continue;
-
-			finalLines = [...finalLines, subtitleItem];
-		}
-
-		return finalLines;
-	}, [frame, onlyCurrentSentence]);
+	const lineSubs = onlyCurrentSentence.filter((word) => {
+		return word.start < frame;
+	});
 
 	return (
 		<div
