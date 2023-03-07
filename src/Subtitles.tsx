@@ -1,6 +1,7 @@
 import parseSRT, { SubtitleItem } from 'parse-srt';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
+	cancelRender,
 	continueRender,
 	delayRender,
 	useCurrentFrame,
@@ -94,10 +95,14 @@ export const PaginatedSubtitles: React.FC<{
 	}, [fontLoaded, frame, handle, linesPerPage]);
 
 	useEffect(() => {
-		ensureFont().then(() => {
-			continueRender(fontHandle);
-			setFontLoaded(true);
-		});
+		ensureFont()
+			.then(() => {
+				continueRender(fontHandle);
+				setFontLoaded(true);
+			})
+			.catch((err) => {
+				cancelRender(err);
+			});
 	}, [fontHandle, fontLoaded]);
 
 	const lineSubs = onlyCurrentSentence.filter((word) => {
