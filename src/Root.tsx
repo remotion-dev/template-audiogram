@@ -5,9 +5,10 @@ import { PromoComposition } from './PromoComposition';
 import './style.css';
 
 const fps = 30;
-const durationInFrames = 30 * fps;
+const durationInFrames = 29.5 * fps;
 
 export const RemotionRoot: React.FC = () => {
+	const AUDIO_START = 6.9; // Seconds
 	return (
 		<>
 			<Composition
@@ -18,7 +19,7 @@ export const RemotionRoot: React.FC = () => {
 				width={1080}
 				height={1080}
 				defaultProps={{
-					audioOffsetInFrames: 2000,
+					audioOffsetInFrames: Math.round(AUDIO_START * fps),
 					source: staticFile('subtitles.srt'),
 				}}
 			/>
