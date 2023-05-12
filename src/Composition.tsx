@@ -13,6 +13,15 @@ import {
 import audioSource from './assets/audio.mp3';
 import coverImg from './assets/cover.jpg';
 import { LINE_HEIGHT, PaginatedSubtitles } from './Subtitles';
+import { z } from 'zod';
+import { zColor } from '@remotion/zod-types';
+
+export const myCompSchema2 = z.object({
+	titleText: z.string(),
+	color1: zColor(),
+});
+
+type MyCompSchemaType = z.infer<typeof myCompSchema2>;
 
 const AudioViz = () => {
 	const frame = useCurrentFrame();
@@ -53,10 +62,12 @@ const AudioViz = () => {
 	);
 };
 
-export const AudiogramComposition: React.FC<{
-	source: string;
-	audioOffsetInFrames: number;
-}> = ({ source, audioOffsetInFrames }) => {
+export const AudiogramComposition: React.FC<
+	{
+		source: string;
+		audioOffsetInFrames: number;
+	} & MyCompSchemaType
+> = ({ source, audioOffsetInFrames, titleText, color1 }) => {
 	const { durationInFrames } = useVideoConfig();
 
 	const [handle] = useState(() => delayRender());
@@ -94,9 +105,8 @@ export const AudiogramComposition: React.FC<{
 						<div className="row">
 							<Img className="cover" src={coverImg} />
 
-							<div className="title">
-								#234 – Money, Kids, and Choosing Your Market with Justin Jackson
-								of Transistor.fm
+							<div className="title" style={{ color: color1 }}>
+								{titleText}
 							</div>
 						</div>
 

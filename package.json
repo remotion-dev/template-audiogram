@@ -11,15 +11,17 @@
 	"repository": {},
 	"license": "UNLICENSED",
 	"dependencies": {
-		"@remotion/cli": "^3.3.45",
-		"@remotion/media-utils": "^3.3.45",
+		"@remotion/cli": "4.0.0-alpha5",
+		"@remotion/media-utils": "4.0.0-alpha5",
+		"@remotion/zod-types": "4.0.0-alpha5",
 		"parse-srt": "1.0.0-alpha",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",
-		"remotion": "^3.3.45"
+		"remotion": "4.0.0-alpha5",
+		"zod": "^3.21.4"
 	},
 	"devDependencies": {
-		"@remotion/eslint-config": "^3.0.0",
+		"@remotion/eslint-config": "4.0.0-alpha5",
 		"@types/react": "^18.0.26",
 		"@types/web": "^0.0.91",
 		"eslint": "^8.30.0",
