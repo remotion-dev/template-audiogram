@@ -16,7 +16,6 @@
 }
 
 .bar {
-	background-color: rgba(252, 211, 77, 1);
 	border-radius: calc(var(--base-size) * 0.25);
 	width: calc(var(--base-size) * 0.25);
 }

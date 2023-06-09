@@ -16,14 +16,16 @@ import { LINE_HEIGHT, PaginatedSubtitles } from './Subtitles';
 import { z } from 'zod';
 import { zColor } from '@remotion/zod-types';
 
-export const myCompSchema2 = z.object({
+export const AudioGramSchema = z.object({
 	titleText: z.string(),
-	color1: zColor(),
+	titleColor: zColor(),
+	waveColor: zColor(),
+	transcriptionColor: zColor(),
 });
 
-type MyCompSchemaType = z.infer<typeof myCompSchema2>;
+type MyCompSchemaType = z.infer<typeof AudioGramSchema>;
 
-const AudioViz = () => {
+const AudioViz: React.FC<{ waveColor: string }> = ({ waveColor }) => {
 	const frame = useCurrentFrame();
 	const { fps } = useVideoConfig();
 	const audioData = useAudioData(audioSource);
@@ -41,7 +43,7 @@ const AudioViz = () => {
 
 	// Pick the low values because they look nicer than high values
 	// feel free to play around :)
-	const visualization = allVisualizationValues.slice(8, 30);
+	const visualization = allVisualizationValues.slice(7, 30);
 
 	const mirrored = [...visualization.slice(1).reverse(), ...visualization];
 
@@ -53,6 +55,7 @@ const AudioViz = () => {
 						key={i}
 						className="bar"
 						style={{
+							backgroundColor: waveColor,
 							height: `${500 * Math.sqrt(v)}%`,
 						}}
 					/>
@@ -67,7 +70,14 @@ export const AudiogramComposition: React.FC<
 		source: string;
 		audioOffsetInFrames: number;
 	} & MyCompSchemaType
-> = ({ source, audioOffsetInFrames, titleText, color1 }) => {
+> = ({
+	source,
+	audioOffsetInFrames,
+	titleText,
+	titleColor,
+	transcriptionColor,
+	waveColor,
+}) => {
 	const { durationInFrames } = useVideoConfig();
 
 	const [handle] = useState(() => delayRender());
@@ -105,13 +115,13 @@ export const AudiogramComposition: React.FC<
 						<div className="row">
 							<Img className="cover" src={coverImg} />
 
-							<div className="title" style={{ color: color1 }}>
+							<div className="title" style={{ color: titleColor }}>
 								{titleText}
 							</div>
 						</div>
 
 						<div>
-							<AudioViz />
+							<AudioViz waveColor={waveColor} />
 						</div>
 
 						<div
@@ -123,6 +133,7 @@ export const AudiogramComposition: React.FC<
 								startFrame={audioOffsetInFrames}
 								endFrame={audioOffsetInFrames + durationInFrames}
 								linesPerPage={4}
+								transcriptionColor={transcriptionColor}
 							/>
 						</div>
 					</div>

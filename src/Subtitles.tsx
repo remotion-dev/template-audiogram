@@ -48,7 +48,14 @@ export const PaginatedSubtitles: React.FC<{
 	startFrame: number;
 	endFrame: number;
 	linesPerPage: number;
-}> = ({ startFrame, endFrame, subtitles, linesPerPage }) => {
+	transcriptionColor: string;
+}> = ({
+	startFrame,
+	endFrame,
+	subtitles,
+	linesPerPage,
+	transcriptionColor,
+}) => {
 	const frame = useCurrentFrame();
 	const windowRef = useRef<HTMLDivElement>(null);
 	const zoomMeasurer = useRef<HTMLDivElement>(null);
@@ -125,7 +132,11 @@ export const PaginatedSubtitles: React.FC<{
 			>
 				{lineSubs.map((item) => (
 					<span key={item.id} id={String(item.id)}>
-						<Word frame={frame} item={item} />{' '}
+						<Word
+							frame={frame}
+							item={item}
+							transcriptionColor={transcriptionColor}
+						/>{' '}
 					</span>
 				))}
 			</div>
