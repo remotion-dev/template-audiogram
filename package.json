@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"description": "My Remotion video",
 	"scripts": {
-		"start": "remotion preview",
+		"start": "remotion studio",
 		"build": "remotion render Audiogram out/video.mp4",
 		"upgrade": "remotion upgrade",
 		"test": "eslint src --ext ts,tsx,js,jsx && tsc"
@@ -11,21 +11,21 @@
 	"repository": {},
 	"license": "UNLICENSED",
 	"dependencies": {
-		"@remotion/cli": "4.0.0-alpha5",
-		"@remotion/media-utils": "4.0.0-alpha5",
-		"@remotion/zod-types": "4.0.0-alpha5",
+		"@remotion/cli": "4.0.0-alpha14",
+		"@remotion/media-utils": "4.0.0-alpha14",
+		"@remotion/zod-types": "4.0.0-alpha14",
 		"parse-srt": "1.0.0-alpha",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",
-		"remotion": "4.0.0-alpha5",
+		"remotion": "4.0.0-alpha14",
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {
-		"@remotion/eslint-config": "4.0.0-alpha5",
+		"@remotion/eslint-config": "4.0.0-alpha14",
 		"@types/react": "^18.0.26",
 		"@types/web": "^0.0.91",
 		"eslint": "^8.30.0",
-		"prettier": "^2.8.1",
+		"prettier": "^2.8.8",
 		"typescript": "^4.9.4"
 	}
 }

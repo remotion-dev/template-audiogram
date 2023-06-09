@@ -7,7 +7,6 @@ const fps = 30;
 const durationInFrames = 29.5 * fps;
 
 export const RemotionRoot: React.FC = () => {
-	const AUDIO_START = 6.9; // Seconds
 	return (
 		<>
 			<Composition
