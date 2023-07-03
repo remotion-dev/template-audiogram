@@ -1,12 +1,7 @@
 :root {
-	--remotion-font: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, 
-	'Segoe UI',
-	Roboto,
-	Helvetica,
-	Arial,
-	sans-serif,
-	'Apple Color Emoji',
-	'Segoe UI Emoji';
+	--remotion-font: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+		Noto Sans, sans-serif, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+		'Apple Color Emoji', 'Segoe UI Emoji';
 	--base-size: 48px;
 }
 
@@ -21,7 +16,6 @@
 }
 
 .bar {
-	background-color:  rgba(252, 211, 77, 1);
 	border-radius: calc(var(--base-size) * 0.25);
 	width: calc(var(--base-size) * 0.25);
 }
@@ -71,7 +65,8 @@
 	position: absolute;
 	left: calc(var(--base-size) * 9);
 	top: calc(var(--base-size) * -5);
-	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+		0 4px 6px -2px rgba(0, 0, 0, 0.05);
 	border-radius: calc(var(--base-size) * 0.75);
 	overflow: hidden;
 }
@@ -82,7 +77,8 @@
 	font-size: calc(var(--base-size) * 1.5);
 	line-height: calc(var(--base-size) * 2);
 	font-weight: 800;
-	filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.03)) drop-shadow(0 8px 5px rgba(0, 0, 0, 0.08));
+	filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.03))
+		drop-shadow(0 8px 5px rgba(0, 0, 0, 0.08));
 	left: calc(var(--base-size) * 0.75);
 	top: calc(var(--base-size) * 0.25);
 	position: absolute;
@@ -94,7 +90,8 @@
 	line-height: 1;
 	font-weight: normal;
 	font-size: var(--base-size);
-	filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.03)) drop-shadow(0 8px 5px rgba(0, 0, 0, 0.08));
+	filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.03))
+		drop-shadow(0 8px 5px rgba(0, 0, 0, 0.08));
 	width: calc(var(--base-size) * 13);
 	left: calc(var(--base-size) * 0.75);
 	top: calc(var(--base-size) * 2.5);
@@ -106,13 +103,10 @@
 	font-size: calc(var(--base-size) * 2.25);
 	line-height: calc(var(--base-size) * 2.5);
 	color: rgba(251, 191, 36, 1);
-	filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.03)) drop-shadow(0 8px 5px rgba(0, 0, 0, 0.08));
+	filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.03))
+		drop-shadow(0 8px 5px rgba(0, 0, 0, 0.08));
 	width: calc(var(--base-size) * 16);
 	position: absolute;
 	top: calc(var(--base-size) * 7);
 	left: calc(var(--base-size) * 0.75);
-}
-
-.remotion-blue {
-	color: #0B84F3;
 }
