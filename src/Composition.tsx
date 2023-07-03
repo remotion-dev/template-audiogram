@@ -13,8 +13,19 @@ import {
 import audioSource from './assets/audio.mp3';
 import coverImg from './assets/cover.jpg';
 import { LINE_HEIGHT, PaginatedSubtitles } from './Subtitles';
+import { z } from 'zod';
+import { zColor } from '@remotion/zod-types';
 
-const AudioViz = () => {
+export const AudioGramSchema = z.object({
+	titleText: z.string(),
+	titleColor: zColor(),
+	waveColor: zColor(),
+	transcriptionColor: zColor(),
+});
+
+type MyCompSchemaType = z.infer<typeof AudioGramSchema>;
+
+const AudioViz: React.FC<{ waveColor: string }> = ({ waveColor }) => {
 	const frame = useCurrentFrame();
 	const { fps } = useVideoConfig();
 	const audioData = useAudioData(audioSource);
@@ -32,7 +43,7 @@ const AudioViz = () => {
 
 	// Pick the low values because they look nicer than high values
 	// feel free to play around :)
-	const visualization = allVisualizationValues.slice(8, 30);
+	const visualization = allVisualizationValues.slice(7, 30);
 
 	const mirrored = [...visualization.slice(1).reverse(), ...visualization];
 
@@ -44,6 +55,7 @@ const AudioViz = () => {
 						key={i}
 						className="bar"
 						style={{
+							backgroundColor: waveColor,
 							height: `${500 * Math.sqrt(v)}%`,
 						}}
 					/>
@@ -53,10 +65,19 @@ const AudioViz = () => {
 	);
 };
 
-export const AudiogramComposition: React.FC<{
-	source: string;
-	audioOffsetInFrames: number;
-}> = ({ source, audioOffsetInFrames }) => {
+export const AudiogramComposition: React.FC<
+	{
+		source: string;
+		audioOffsetInFrames: number;
+	} & MyCompSchemaType
+> = ({
+	source,
+	audioOffsetInFrames,
+	titleText,
+	titleColor,
+	transcriptionColor,
+	waveColor,
+}) => {
 	const { durationInFrames } = useVideoConfig();
 
 	const [handle] = useState(() => delayRender());
@@ -94,14 +115,13 @@ export const AudiogramComposition: React.FC<{
 						<div className="row">
 							<Img className="cover" src={coverImg} />
 
-							<div className="title">
-								#234 – Money, Kids, and Choosing Your Market with Justin Jackson
-								of Transistor.fm
+							<div className="title" style={{ color: titleColor }}>
+								{titleText}
 							</div>
 						</div>
 
 						<div>
-							<AudioViz />
+							<AudioViz waveColor={waveColor} />
 						</div>
 
 						<div
@@ -113,6 +133,7 @@ export const AudiogramComposition: React.FC<{
 								startFrame={audioOffsetInFrames}
 								endFrame={audioOffsetInFrames + durationInFrames}
 								linesPerPage={4}
+								transcriptionColor={transcriptionColor}
 							/>
 						</div>
 					</div>

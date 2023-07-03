@@ -1,10 +1,13 @@
-// All configuration options: https://remotion.dev/docs/config
-// Each option also is available as a CLI flag: https://remotion.dev/docs/cli
-// ! The configuration file does only apply if you render via the CLI !
+/**
+ * Note: When using the Node.JS APIs, the config file
+ * doesn't apply. Instead, pass options directly to the APIs.
+ *
+ * All configuration options: https://remotion.dev/docs/config
+ */
 
-import { Config } from 'remotion';
+import { Config } from '@remotion/cli/config';
 
-Config.setImageFormat('jpeg');
+Config.setVideoImageFormat('jpeg');
 Config.setOverwriteOutput(true);
 
 // This template processes the whole audio file on each thread which is heavy.
