@@ -35,7 +35,7 @@ export const AudioGramSchema = z.object({
 	waveNumberOfSamples: z.enum(['32', '64', '128', '256', '512']),
 });
 
-type MyCompSchemaType = z.infer<typeof AudioGramSchema>;
+type AudiogramCompositionSchemaType = z.infer<typeof AudioGramSchema>;
 
 const AudioViz: React.FC<{
 	waveColor: string;
@@ -50,11 +50,11 @@ const AudioViz: React.FC<{
 	freqRangeStartIndex,
 	waveLinesToDisplay,
 	mirrorWave,
-	audioSrc
+	audioSrc,
 }) => {
 	const frame = useCurrentFrame();
 	const { fps } = useVideoConfig();
-	
+
 	const audioData = useAudioData(audioSrc);
 
 	if (!audioData) {
@@ -72,13 +72,13 @@ const AudioViz: React.FC<{
 	// feel free to play around :)
 	const frequencyDataSubset = frequencyData.slice(
 		freqRangeStartIndex,
-		freqRangeStartIndex + (mirrorWave? Math.round(waveLinesToDisplay / 2) : waveLinesToDisplay)
+		freqRangeStartIndex +
+			(mirrorWave ? Math.round(waveLinesToDisplay / 2) : waveLinesToDisplay)
 	);
 
-	const frequencesToDisplay = mirrorWave? [
-		...frequencyDataSubset.slice(1).reverse(),
-		...frequencyDataSubset,
-	] : frequencyDataSubset;
+	const frequencesToDisplay = mirrorWave
+		? [...frequencyDataSubset.slice(1).reverse(), ...frequencyDataSubset]
+		: frequencyDataSubset;
 
 	return (
 		<div className="audio-viz">
@@ -88,7 +88,7 @@ const AudioViz: React.FC<{
 						key={i}
 						className="bar"
 						style={{
-							minWidth: "1px",
+							minWidth: '1px',
 							backgroundColor: waveColor,
 							height: `${500 * Math.sqrt(v)}%`,
 						}}
@@ -99,13 +99,7 @@ const AudioViz: React.FC<{
 	);
 };
 
-export const AudiogramComposition: React.FC<
-	{
-		subtitlesFileName: string;
-		audioOffsetInFrames: number;
-		onlyDisplayCurrentSentence: boolean;
-	} & MyCompSchemaType
-> = ({
+export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
 	subtitlesFileName,
 	audioFileName,
 	coverImgFileName,
@@ -131,7 +125,7 @@ export const AudiogramComposition: React.FC<
 
 	// get the static files
 	const subtitlesSrc = staticFile(subtitlesFileName);
-	const audioSrc = staticFile(audioFileName)
+	const audioSrc = staticFile(audioFileName);
 	const coverImgSrc = staticFile(coverImgFileName);
 
 	useEffect(() => {
@@ -149,8 +143,6 @@ export const AudiogramComposition: React.FC<
 	if (!subtitles) {
 		return null;
 	}
-
-
 
 	return (
 		<div ref={ref}>
