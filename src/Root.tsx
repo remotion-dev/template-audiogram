@@ -17,9 +17,8 @@ export const RemotionRoot: React.FC = () => {
 				height={1080}
 				schema={AudioGramSchema}
 				defaultProps={{
-
-					// subtitles settings
-					subtitlesFileName: 'subtitles.srt',
+					// audio settings
+					audioOffsetInFrames: 207,
 
 					// title settings
 					audioFileName: 'audio.mp3',
@@ -29,19 +28,19 @@ export const RemotionRoot: React.FC = () => {
 					titleColor: 'rgba(186, 186, 186, 0.93)',
 
 					// subtitles settings
+					subtitlesFileName: 'subtitles.srt',
 					onlyDisplayCurrentSentence: true,
 					subtitlesTextColor: 'rgba(255, 255, 255, 0.93)',
 					subtitlesLinePerPage: 4,
 					subtitlesZoomMeasurerSize: 10,
 					subtitlesLineHeight: 98,
-					audioOffsetInFrames: 207,
-					
+
 					// wave settings
 					waveColor: '#a3a5ae',
 					waveFreqRangeStartIndex: 7,
 					waveLinesToDisplay: 29,
-					waveNumberOfSamples: "256", // this is string for Remotion controls and will be converted to a number
-					mirrorWave: true					
+					waveNumberOfSamples: '256', // this is string for Remotion controls and will be converted to a number
+					mirrorWave: true,
 				}}
 			/>
 		</>
