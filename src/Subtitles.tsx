@@ -90,7 +90,7 @@ export const PaginatedSubtitles: React.FC<{
 			}) + 1;
 
 		return windowedFrameSubs.slice(indexOfCurrentSentence);
-	}, [frame, windowedFrameSubs]);
+	}, [frame, onlyDisplayCurrentSentence, windowedFrameSubs]);
 
 	useEffect(() => {
 		if (!fontLoaded) {
@@ -105,7 +105,14 @@ export const PaginatedSubtitles: React.FC<{
 		const linesToOffset = Math.max(0, linesRendered - linesPerPage);
 		setLineOffset(linesToOffset);
 		continueRender(handle);
-	}, [fontLoaded, frame, handle, linesPerPage]);
+	}, [
+		fontLoaded,
+		frame,
+		handle,
+		linesPerPage,
+		subtitlesLineHeight,
+		subtitlesZoomMeasurerSize,
+	]);
 
 	useEffect(() => {
 		ensureFont()
