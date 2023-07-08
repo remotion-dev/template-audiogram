@@ -40,21 +40,24 @@ const useWindowedFrameSubs = (
 	}, [fps, parsed, windowEnd, windowStart]);
 };
 
-const ZOOM_MEASURER_SIZE = 10;
-export const LINE_HEIGHT = 98;
-
 export const PaginatedSubtitles: React.FC<{
 	subtitles: string;
 	startFrame: number;
 	endFrame: number;
 	linesPerPage: number;
-	transcriptionColor: string;
+	subtitlesTextColor: string;
+	subtitlesZoomMeasurerSize: number;
+	subtitlesLineHeight: number;
+	onlyDisplayCurrentSentence: boolean;
 }> = ({
 	startFrame,
 	endFrame,
 	subtitles,
 	linesPerPage,
-	transcriptionColor,
+	subtitlesTextColor: transcriptionColor,
+	subtitlesZoomMeasurerSize,
+	subtitlesLineHeight,
+	onlyDisplayCurrentSentence,
 }) => {
 	const frame = useCurrentFrame();
 	const windowRef = useRef<HTMLDivElement>(null);
@@ -69,7 +72,10 @@ export const PaginatedSubtitles: React.FC<{
 
 	const [lineOffset, setLineOffset] = useState(0);
 
-	const onlyCurrentSentence = useMemo(() => {
+	const currentAndFollowingSentences = useMemo(() => {
+		// If we don't want to only display the current sentence, return all the words
+		if (!onlyDisplayCurrentSentence) return windowedFrameSubs;
+
 		const indexOfCurrentSentence =
 			windowedFrameSubs.findLastIndex((w, i) => {
 				const nextWord = windowedFrameSubs[i + 1];
@@ -84,7 +90,7 @@ export const PaginatedSubtitles: React.FC<{
 			}) + 1;
 
 		return windowedFrameSubs.slice(indexOfCurrentSentence);
-	}, [frame, windowedFrameSubs]);
+	}, [frame, onlyDisplayCurrentSentence, windowedFrameSubs]);
 
 	useEffect(() => {
 		if (!fontLoaded) {
@@ -92,14 +98,21 @@ export const PaginatedSubtitles: React.FC<{
 		}
 		const zoom =
 			(zoomMeasurer.current?.getBoundingClientRect().height as number) /
-			ZOOM_MEASURER_SIZE;
+			subtitlesZoomMeasurerSize;
 		const linesRendered =
 			(windowRef.current?.getBoundingClientRect().height as number) /
-			(LINE_HEIGHT * zoom);
+			(subtitlesLineHeight * zoom);
 		const linesToOffset = Math.max(0, linesRendered - linesPerPage);
 		setLineOffset(linesToOffset);
 		continueRender(handle);
-	}, [fontLoaded, frame, handle, linesPerPage]);
+	}, [
+		fontLoaded,
+		frame,
+		handle,
+		linesPerPage,
+		subtitlesLineHeight,
+		subtitlesZoomMeasurerSize,
+	]);
 
 	useEffect(() => {
 		ensureFont()
@@ -112,7 +125,7 @@ export const PaginatedSubtitles: React.FC<{
 			});
 	}, [fontHandle, fontLoaded]);
 
-	const lineSubs = onlyCurrentSentence.filter((word) => {
+	const currentFrameSentences = currentAndFollowingSentences.filter((word) => {
 		return word.start < frame;
 	});
 
@@ -127,10 +140,10 @@ export const PaginatedSubtitles: React.FC<{
 			<div
 				ref={windowRef}
 				style={{
-					transform: `translateY(-${lineOffset * LINE_HEIGHT}px)`,
+					transform: `translateY(-${lineOffset * subtitlesLineHeight}px)`,
 				}}
 			>
-				{lineSubs.map((item) => (
+				{currentFrameSentences.map((item) => (
 					<span key={item.id} id={String(item.id)}>
 						<Word
 							frame={frame}
@@ -142,7 +155,10 @@ export const PaginatedSubtitles: React.FC<{
 			</div>
 			<div
 				ref={zoomMeasurer}
-				style={{ height: ZOOM_MEASURER_SIZE, width: ZOOM_MEASURER_SIZE }}
+				style={{
+					height: subtitlesZoomMeasurerSize,
+					width: subtitlesZoomMeasurerSize,
+				}}
 			/>
 		</div>
 	);
