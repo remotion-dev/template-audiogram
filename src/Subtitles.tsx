@@ -148,7 +148,10 @@ export const PaginatedSubtitles: React.FC<{
 			</div>
 			<div
 				ref={zoomMeasurer}
-				style={{ height: subtitlesZoomMeasurerSize, width: subtitlesZoomMeasurerSize }}
+				style={{
+					height: subtitlesZoomMeasurerSize,
+					width: subtitlesZoomMeasurerSize,
+				}}
 			/>
 		</div>
 	);

@@ -17,17 +17,17 @@ export const RemotionRoot: React.FC = () => {
 				height={1080}
 				schema={AudioGramSchema}
 				defaultProps={{
-					// audio settings
+					// Audio settings
 					audioOffsetInFrames: 207,
 
-					// title settings
+					// Title settings
 					audioFileName: 'audio.mp3',
 					coverImgFileName: 'cover.jpg',
 					titleText:
 						'#234 – Money, Kids, and Choosing Your Market with Justin Jackson of Transistor.fm',
 					titleColor: 'rgba(186, 186, 186, 0.93)',
 
-					// subtitles settings
+					// Subtitles settings
 					subtitlesFileName: 'subtitles.srt',
 					onlyDisplayCurrentSentence: true,
 					subtitlesTextColor: 'rgba(255, 255, 255, 0.93)',
@@ -35,11 +35,11 @@ export const RemotionRoot: React.FC = () => {
 					subtitlesZoomMeasurerSize: 10,
 					subtitlesLineHeight: 98,
 
-					// wave settings
+					// Wave settings
 					waveColor: '#a3a5ae',
 					waveFreqRangeStartIndex: 7,
 					waveLinesToDisplay: 29,
-					waveNumberOfSamples: '256', // this is string for Remotion controls and will be converted to a number
+					waveNumberOfSamples: '256', // This is string for Remotion controls and will be converted to a number
 					mirrorWave: true,
 				}}
 			/>

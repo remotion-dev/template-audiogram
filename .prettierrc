@@ -1,6 +1,5 @@
 {
 	"singleQuote": true,
-	"jsxBracketSameLine": false,
 	"useTabs": true,
 	"overrides": [
 		{
