@@ -31,6 +31,9 @@ There are a few places:
 - Your podcasting host might provide them for you.
 - Descript makes transcription really easy.
 - There are tons of other, paid solutions, like [Otter.ai](https://otter.ai) and [Scriptme.io](https://scriptme.io).
+- And open-source solutions available, like [Subs AI](https://github.com/abdeladim-s/subsai)
+
+For the purposes of this repo, make sure to export subtitles that are segmented by word (rather than sentence).
 
 ## Commands
 
