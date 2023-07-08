@@ -7,7 +7,6 @@ import {
 	delayRender,
 	Img,
 	Sequence,
-	staticFile,
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
@@ -123,13 +122,8 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
 	const [subtitles, setSubtitles] = useState<string | null>(null);
 	const ref = useRef<HTMLDivElement>(null);
 
-	// get the static files
-	const subtitlesSrc = staticFile(subtitlesFileName);
-	const audioSrc = staticFile(audioFileName);
-	const coverImgSrc = staticFile(coverImgFileName);
-
 	useEffect(() => {
-		fetch(subtitlesSrc)
+		fetch(subtitlesFileName)
 			.then((res) => res.text())
 			.then((text) => {
 				setSubtitles(text);
@@ -138,7 +132,7 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
 			.catch((err) => {
 				console.log('Error fetching subtitles', err);
 			});
-	}, [handle, subtitlesSrc]);
+	}, [handle, subtitlesFileName]);
 
 	if (!subtitles) {
 		return null;
@@ -148,7 +142,7 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
 		<div ref={ref}>
 			<AbsoluteFill>
 				<Sequence from={-audioOffsetInFrames}>
-					<Audio src={audioSrc} />
+					<Audio src={audioFileName} />
 
 					<div
 						className="container"
@@ -157,7 +151,7 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
 						}}
 					>
 						<div className="row">
-							<Img className="cover" src={coverImgSrc} />
+							<Img className="cover" src={coverImgFileName} />
 
 							<div className="title" style={{ color: titleColor }}>
 								{titleText}
@@ -166,7 +160,7 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
 
 						<div>
 							<AudioViz
-								audioSrc={audioSrc}
+								audioSrc={audioFileName}
 								mirrorWave={mirrorWave}
 								waveColor={waveColor}
 								numberOfSamples={Number(waveNumberOfSamples)}

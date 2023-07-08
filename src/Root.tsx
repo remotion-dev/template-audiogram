@@ -1,4 +1,4 @@
-import { Composition } from 'remotion';
+import { Composition, staticFile } from 'remotion';
 import { AudioGramSchema, AudiogramComposition } from './Composition';
 import './style.css';
 
@@ -21,14 +21,14 @@ export const RemotionRoot: React.FC = () => {
 					audioOffsetInFrames: 207,
 
 					// Title settings
-					audioFileName: 'audio.mp3',
-					coverImgFileName: 'cover.jpg',
+					audioFileName: staticFile('audio.mp3'),
+					coverImgFileName: staticFile('cover.jpg'),
 					titleText:
 						'#234 – Money, Kids, and Choosing Your Market with Justin Jackson of Transistor.fm',
 					titleColor: 'rgba(186, 186, 186, 0.93)',
 
 					// Subtitles settings
-					subtitlesFileName: 'subtitles.srt',
+					subtitlesFileName: staticFile('subtitles.srt'),
 					onlyDisplayCurrentSentence: true,
 					subtitlesTextColor: 'rgba(255, 255, 255, 0.93)',
 					subtitlesLinePerPage: 4,
