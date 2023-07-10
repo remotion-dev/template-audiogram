@@ -1,6 +1,7 @@
 import { Composition, staticFile } from 'remotion';
 import { AudioGramSchema, AudiogramComposition } from './Composition';
 import './style.css';
+import { getAudioDurationInSeconds } from '@remotion/media-utils';
 
 const fps = 30;
 const durationInFrames = 29.5 * fps;
@@ -41,6 +42,16 @@ export const RemotionRoot: React.FC = () => {
 					waveLinesToDisplay: 29,
 					waveNumberOfSamples: '256', // This is string for Remotion controls and will be converted to a number
 					mirrorWave: true,
+				}}
+				calculateMetadata={async ({ props }) => {
+					const audioDurationInSec = Math.ceil(
+						await getAudioDurationInSeconds(props.audioFileName)
+					);
+
+					return {
+						durationInFrames: audioDurationInSec * fps,
+						props,
+					};
 				}}
 			/>
 		</>
