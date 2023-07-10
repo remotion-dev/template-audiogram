@@ -11,18 +11,21 @@ import {
 	useVideoConfig,
 } from 'remotion';
 
+export const fps = 30;
+
 import { PaginatedSubtitles } from './Subtitles';
 import { z } from 'zod';
 import { zColor } from '@remotion/zod-types';
 
 export const AudioGramSchema = z.object({
+	durationInSeconds: z.number().positive(),
+	audioOffsetInSeconds: z.number().min(0),
 	subtitlesFileName: z.string(),
 	audioFileName: z.string(),
 	coverImgFileName: z.string(),
 	titleText: z.string(),
 	titleColor: zColor(),
 	waveColor: zColor(),
-	audioOffsetInFrames: z.number().int().min(0),
 	subtitlesTextColor: zColor(),
 	subtitlesLinePerPage: z.number().int().min(0),
 	subtitlesLineHeight: z.number().int().min(0),
@@ -102,7 +105,6 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
 	subtitlesFileName,
 	audioFileName,
 	coverImgFileName,
-	audioOffsetInFrames,
 	titleText,
 	titleColor,
 	subtitlesTextColor,
@@ -115,6 +117,7 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
 	subtitlesLineHeight,
 	onlyDisplayCurrentSentence,
 	mirrorWave,
+	audioOffsetInSeconds,
 }) => {
 	const { durationInFrames } = useVideoConfig();
 
@@ -137,6 +140,8 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
 	if (!subtitles) {
 		return null;
 	}
+
+	const audioOffsetInFrames = Math.round(audioOffsetInSeconds * fps);
 
 	return (
 		<div ref={ref}>
