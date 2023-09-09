@@ -24,7 +24,7 @@ export const AudioGramSchema = z.object({
 		message: 'Subtitles file must be a .srt file',
 	}),
 	audioFileName: z.string().refine((s) => s.endsWith('.mp3'), {
-		message: 'Subtitles file must be a .mp3 file',
+		message: 'Audio file must be a .mp3 file',
 	}),
 	coverImgFileName: z
 		.string()
@@ -35,7 +35,7 @@ export const AudioGramSchema = z.object({
 				s.endsWith('.png') ||
 				s.endsWith('.bmp'),
 			{
-				message: 'Subtitles file must be a .jpg / .jpeg / .png / .bmp file',
+				message: 'Image file must be a .jpg / .jpeg / .png / .bmp file',
 			}
 		),
 	titleText: z.string(),
