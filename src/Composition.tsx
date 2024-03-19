@@ -93,13 +93,13 @@ const AudioViz: React.FC<{
 			(mirrorWave ? Math.round(waveLinesToDisplay / 2) : waveLinesToDisplay)
 	);
 
-	const frequencesToDisplay = mirrorWave
+	const frequenciesToDisplay = mirrorWave
 		? [...frequencyDataSubset.slice(1).reverse(), ...frequencyDataSubset]
 		: frequencyDataSubset;
 
 	return (
 		<div className="audio-viz">
-			{frequencesToDisplay.map((v, i) => {
+			{frequenciesToDisplay.map((v, i) => {
 				return (
 					<div
 						key={i}
