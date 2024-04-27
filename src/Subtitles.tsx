@@ -12,7 +12,7 @@ import { Word } from './Word';
 
 const useWindowedFrameSubs = (
 	src: string,
-	options: { windowStart: number; windowEnd: number }
+	options: { windowStart: number; windowEnd: number },
 ) => {
 	const { windowStart, windowEnd } = options;
 	const config = useVideoConfig();
@@ -168,7 +168,7 @@ declare global {
 	interface Array<T> {
 		findLastIndex(
 			predicate: (value: T, index: number, obj: T[]) => unknown,
-			thisArg?: unknown
+			thisArg?: unknown,
 		): number;
 	}
 }

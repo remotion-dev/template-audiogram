@@ -18,14 +18,14 @@
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",
 		"remotion": "^4.0.4",
-		"zod": "^3.21.4"
+		"zod": "3.22.3"
 	},
 	"devDependencies": {
 		"@remotion/eslint-config": "^4.0.4",
 		"@types/react": "^18.0.26",
 		"@types/web": "^0.0.91",
 		"eslint": "^8.43.0",
-		"prettier": "^2.8.8",
-		"typescript": "^4.9.4"
+		"prettier": "3.2.5",
+		"typescript": "5.4.5"
 	}
 }

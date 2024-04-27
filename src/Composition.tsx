@@ -36,7 +36,7 @@ export const AudioGramSchema = z.object({
 				s.endsWith('.bmp'),
 			{
 				message: 'Image file must be a .jpg / .jpeg / .png / .bmp file',
-			}
+			},
 		),
 	titleText: z.string(),
 	titleColor: zColor(),
@@ -90,7 +90,7 @@ const AudioViz: React.FC<{
 	const frequencyDataSubset = frequencyData.slice(
 		freqRangeStartIndex,
 		freqRangeStartIndex +
-			(mirrorWave ? Math.round(waveLinesToDisplay / 2) : waveLinesToDisplay)
+			(mirrorWave ? Math.round(waveLinesToDisplay / 2) : waveLinesToDisplay),
 	);
 
 	const frequencesToDisplay = mirrorWave

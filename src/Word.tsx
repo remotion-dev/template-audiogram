@@ -21,7 +21,7 @@ export const Word: React.FC<{
 			easing: Easing.out(Easing.quad),
 			extrapolateLeft: 'clamp',
 			extrapolateRight: 'clamp',
-		}
+		},
 	);
 
 	return (
