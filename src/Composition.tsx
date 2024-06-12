@@ -162,7 +162,7 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
 		<div ref={ref}>
 			<AbsoluteFill>
 				<Sequence from={-audioOffsetInFrames}>
-					<Audio src={audioFileName} />
+					<Audio pauseWhenBuffering src={audioFileName} />
 
 					<div
 						className="container"
