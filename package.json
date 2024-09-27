@@ -1,31 +1,32 @@
 {
-	"name": "remotion-template",
-	"version": "1.0.0",
-	"description": "My Remotion video",
-	"scripts": {
-		"start": "remotion studio",
-		"build": "remotion render Audiogram out/video.mp4",
-		"upgrade": "remotion upgrade",
-		"test": "eslint src --ext ts,tsx,js,jsx && tsc"
-	},
-	"repository": {},
-	"license": "UNLICENSED",
-	"dependencies": {
-		"@remotion/cli": "^4.0.4",
-		"@remotion/media-utils": "^4.0.4",
-		"@remotion/zod-types": "^4.0.4",
-		"parse-srt": "1.0.0-alpha",
-		"react": "^18.0.0",
-		"react-dom": "^18.0.0",
-		"remotion": "^4.0.4",
-		"zod": "3.22.3"
-	},
-	"devDependencies": {
-		"@remotion/eslint-config": "^4.0.4",
-		"@types/react": "^18.0.26",
-		"@types/web": "^0.0.91",
-		"eslint": "^8.43.0",
-		"prettier": "3.2.5",
-		"typescript": "5.4.5"
-	}
+  "name": "template-audiogram",
+  "version": "1.0.0",
+  "description": "My Remotion video",
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion render Audiogram out/video.mp4",
+    "upgrade": "remotion upgrade",
+    "test": "eslint src --ext ts,tsx,js,jsx && tsc"
+  },
+  "repository": {},
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "@remotion/media-utils": "^4.0.0",
+    "@remotion/zod-types": "^4.0.0",
+    "parse-srt": "1.0.0-alpha",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "^4.0.0",
+    "zod": "3.22.3"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config": "^4.0.0",
+    "@types/react": "18.3.1",
+    "@types/web": "0.0.166",
+    "eslint": "8.56.0",
+    "prettier": "3.3.3",
+    "typescript": "5.6.2"
+  },
+  "private": true
 }

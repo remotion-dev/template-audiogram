@@ -5,9 +5,9 @@
  * All configuration options: https://remotion.dev/docs/config
  */
 
-import { Config } from '@remotion/cli/config';
+import { Config } from "@remotion/cli/config";
 
-Config.setVideoImageFormat('jpeg');
+Config.setVideoImageFormat("jpeg");
 Config.setOverwriteOutput(true);
 
 // This template processes the whole audio file on each thread which is heavy.
