@@ -47,7 +47,7 @@ export const RemotionRoot: React.FC = () => {
             props.audioFileName,
           );
           return {
-            durationInFrames: Math.round(audioDuration * fps),
+            durationInFrames: Math.ceil(audioDuration * fps),
             props,
           };
         }}
