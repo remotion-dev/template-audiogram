@@ -57,7 +57,7 @@ const useWindowedFrameSubs = (
 };
 
 export const PaginatedSubtitles: React.FC<{
-  readonly subtitles: Caption[];
+  readonly subtitles: Caption[] | string;
   readonly startFrame: number;
   readonly endFrame: number;
   readonly linesPerPage: number;

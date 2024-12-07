@@ -144,7 +144,7 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
   const { durationInFrames } = useVideoConfig();
 
   const [handle] = useState(() => delayRender());
-  const [subtitles, setSubtitles] = useState<Caption[] | null>(null);
+  const [subtitles, setSubtitles] = useState<Caption[] | string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -168,8 +168,6 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
   if (!subtitles) {
     return null;
   }
-
-  console.log("subtitles", subtitles);
 
   const audioOffsetInFrames = Math.round(audioOffsetInSeconds * fps);
 
