@@ -1,6 +1,5 @@
 declare module "parse-srt" {
   export type SubtitleItem = {
-    id: number;
     start: number;
     end: number;
     text: string;

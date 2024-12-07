@@ -1,4 +1,3 @@
-import parseSRT, { SubtitleItem } from "parse-srt";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   cancelRender,
@@ -9,22 +8,39 @@ import {
 } from "remotion";
 import { ensureFont } from "./ensure-font";
 import { Word } from "./Word";
-
+import { Caption } from "@remotion/captions";
+import parseSRT, { SubtitleItem } from "parse-srt";
 const useWindowedFrameSubs = (
-  src: string,
+  srcOrCaptions: string | Caption[],
   options: { windowStart: number; windowEnd: number },
 ) => {
   const { windowStart, windowEnd } = options;
   const config = useVideoConfig();
   const { fps } = config;
 
-  const parsed = useMemo(() => parseSRT(src), [src]);
-
   return useMemo(() => {
-    return parsed
+    if (typeof srcOrCaptions === "string") {
+      return parseSRT(srcOrCaptions)
+        .map((item) => {
+          const start = Math.floor(item.start * fps);
+          const end = Math.floor(item.end * fps);
+          return { item, start, end };
+        })
+        .filter(({ start }) => {
+          return start >= windowStart && start <= windowEnd;
+        })
+        .map<SubtitleItem>(({ item, start, end }) => {
+          return {
+            ...item,
+            start,
+            end,
+          };
+        }, []);
+    }
+    return srcOrCaptions
       .map((item) => {
-        const start = Math.floor(item.start * fps);
-        const end = Math.floor(item.end * fps);
+        const start = Math.floor((item.startMs / 1000) * fps);
+        const end = Math.floor((item.endMs / 1000) * fps);
         return { item, start, end };
       })
       .filter(({ start }) => {
@@ -37,11 +53,11 @@ const useWindowedFrameSubs = (
           end,
         };
       }, []);
-  }, [fps, parsed, windowEnd, windowStart]);
+  }, [fps, srcOrCaptions, windowEnd, windowStart]);
 };
 
 export const PaginatedSubtitles: React.FC<{
-  readonly subtitles: string;
+  readonly subtitles: Caption[];
   readonly startFrame: number;
   readonly endFrame: number;
   readonly linesPerPage: number;
@@ -144,7 +160,7 @@ export const PaginatedSubtitles: React.FC<{
         }}
       >
         {currentFrameSentences.map((item) => (
-          <span key={item.id} id={String(item.id)}>
+          <span key={item.start + item.end} id={String(item.start + item.end)}>
             <Word
               frame={frame}
               item={item}

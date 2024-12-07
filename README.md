@@ -35,6 +35,10 @@ There are a few places:
 
 For the purposes of this repo, make sure to export subtitles that are segmented by word (rather than sentence).
 
+## Whisper generated captions(.json)
+
+ [Whisper Captions](https://www.remotion.dev/docs/install-whisper-cpp/to-captions) are now supported, ensure that the file extension to use is .json.
+
 ## Commands
 
 **Install Dependencies**

@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { zColor } from "@remotion/zod-types";
+import { Caption } from "@remotion/captions";
 import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -14,15 +17,19 @@ import {
 export const fps = 30;
 
 import { PaginatedSubtitles } from "./Subtitles";
-import { z } from "zod";
-import { zColor } from "@remotion/zod-types";
 
 export const AudioGramSchema = z.object({
   durationInSeconds: z.number().positive(),
   audioOffsetInSeconds: z.number().min(0),
-  subtitlesFileName: z.string().refine((s) => s.endsWith(".srt"), {
-    message: "Subtitles file must be a .srt file",
-  }),
+  subtitlesFileName: z.string().refine(
+    (s) => {
+      const allowedExtensions = [".srt", ".json"];
+      return allowedExtensions.some((extension) => s.endsWith(extension));
+    },
+    {
+      message: "Subtitles file must be a .srt or .json file",
+    },
+  ),
   audioFileName: z.string().refine((s) => s.endsWith(".mp3"), {
     message: "Audio file must be a .mp3 file",
   }),
@@ -137,24 +144,32 @@ export const AudiogramComposition: React.FC<AudiogramCompositionSchemaType> = ({
   const { durationInFrames } = useVideoConfig();
 
   const [handle] = useState(() => delayRender());
-  const [subtitles, setSubtitles] = useState<string | null>(null);
+  const [subtitles, setSubtitles] = useState<Caption[] | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch(subtitlesFileName)
-      .then((res) => res.text())
-      .then((text) => {
-        setSubtitles(text);
+    const loadSubtitles = async () => {
+      try {
+        const response = await fetch(subtitlesFileName);
+        const data = subtitlesFileName.endsWith(".json")
+          ? await response.json()
+          : await response.text();
+
+        setSubtitles(data);
         continueRender(handle);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log("Error fetching subtitles", err);
-      });
+      }
+    };
+
+    loadSubtitles();
   }, [handle, subtitlesFileName]);
 
   if (!subtitles) {
     return null;
   }
+
+  console.log("subtitles", subtitles);
 
   const audioOffsetInFrames = Math.round(audioOffsetInSeconds * fps);
 

@@ -1,7 +1,7 @@
 import { Composition, staticFile } from "remotion";
 import { AudioGramSchema, AudiogramComposition, fps } from "./Composition";
 import "./style.css";
-
+import { getAudioDurationInSeconds } from "@remotion/media-utils";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -24,7 +24,7 @@ export const RemotionRoot: React.FC = () => {
           titleColor: "rgba(186, 186, 186, 0.93)",
 
           // Subtitles settings
-          subtitlesFileName: staticFile("subtitles.srt"),
+          subtitlesFileName: staticFile("audio.json"),
           onlyDisplayCurrentSentence: true,
           subtitlesTextColor: "rgba(255, 255, 255, 0.93)",
           subtitlesLinePerPage: 4,
@@ -40,9 +40,14 @@ export const RemotionRoot: React.FC = () => {
           durationInSeconds: 29.5,
         }}
         // Determine the length of the video based on the duration of the audio file
-        calculateMetadata={({ props }) => {
+        calculateMetadata={async ({ props }) => {
+          const fps = 30;
+
+          const audioDuration = await getAudioDurationInSeconds(
+            props.audioFileName,
+          );
           return {
-            durationInFrames: props.durationInSeconds * fps,
+            durationInFrames: Math.round(audioDuration * fps),
             props,
           };
         }}
