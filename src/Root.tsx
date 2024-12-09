@@ -24,7 +24,7 @@ export const RemotionRoot: React.FC = () => {
           titleColor: "rgba(186, 186, 186, 0.93)",
 
           // Subtitles settings
-          subtitlesFileName: staticFile("audio.json"),
+          subtitlesFileName: staticFile("subtitles.srt"),
           onlyDisplayCurrentSentence: true,
           subtitlesTextColor: "rgba(255, 255, 255, 0.93)",
           subtitlesLinePerPage: 4,
