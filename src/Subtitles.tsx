@@ -160,13 +160,7 @@ export const PaginatedSubtitles: React.FC<{
         }}
       >
         {currentFrameSentences.map((item) => (
-          <span
-            key={item.start + item.end}
-            id={String(item.start + item.end)}
-            style={{
-              whiteSpace: "pre",
-            }}
-          >
+          <span key={item.start + item.end} id={String(item.start + item.end)}>
             <Word
               frame={frame}
               item={item}
