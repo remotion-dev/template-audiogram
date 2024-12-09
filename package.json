@@ -13,7 +13,7 @@
   "dependencies": {
     "@remotion/captions": "4.0.236",
     "@remotion/cli": "4.0.236",
-    "@remotion/media-utils": "^4.0.236",
+    "@remotion/media-utils": "4.0.236",
     "@remotion/zod-types": "4.0.236",
     "parse-srt": "1.0.0-alpha",
     "react": "19.0.0",
