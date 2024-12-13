@@ -8,13 +8,15 @@
     "upgrade": "remotion upgrade",
     "lint": "eslint src --ext ts,tsx,js,jsx && tsc"
   },
+  "author": "Marcus Stenbeck, Jonny Burger, Alex Fernandez",
   "repository": {},
   "license": "UNLICENSED",
   "dependencies": {
     "@remotion/cli": "^4.0.0",
     "@remotion/media-utils": "^4.0.0",
+    "@remotion/captions": "^4.0.0",
     "@remotion/zod-types": "^4.0.0",
-    "parse-srt": "1.0.0-alpha",
+    "@remotion/google-fonts": "^4.0.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "remotion": "^4.0.0",
