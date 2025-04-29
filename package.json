@@ -14,6 +14,7 @@
   "dependencies": {
     "@remotion/cli": "^4.0.0",
     "@remotion/media-utils": "^4.0.0",
+    "@remotion/media-parser": "^4.0.0",
     "@remotion/captions": "^4.0.0",
     "@remotion/zod-types": "^4.0.0",
     "@remotion/google-fonts": "^4.0.0",
